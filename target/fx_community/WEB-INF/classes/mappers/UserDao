@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fx.dao.UserDao">
+
+    <resultMap id="UserResult" type="User">
+        <id property="uid" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="headimg" column="headimg"/>
+    </resultMap>
+
+    <insert id="addUser">
+        INSERT INTO user (username, password, headimg) VALUES (#{username}, #{password}, #{headimg})
+    </insert>
+
+    <select id="findUser" resultMap="UserResult">
+        SELECT * FROM user WHERE username=#{username}
+        <if test="password!=null">
+            AND password=#{password}
+        </if>
+    </select>
+
+    <select id="getUserById" resultMap="UserResult">
+        SELECT *
+        FROM user
+        WHERE uid = #{uid}
+    </select>
+
+    <update id="updateHeadimg">
+        UPDATE user
+        SET headimg = #{headimg}
+        WHERE uid = #{uid}
+    </update>
+
+    <update id="updatePassword">
+        UPDATE user
+        SET password = #{password}
+        WHERE uid = #{uid}
+    </update>
+
+</mapper>
